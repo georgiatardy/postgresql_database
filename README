@@ -1,0 +1,138 @@
+Create a PostgreSQL database called todolist with a table called todos to be used for storing todo items.
+
+Each item should have the following fields:
+
+id -- a serial primary key
+title -- not optional, string up to 255 characters
+details -- optional, holds a large amount of text
+priority -- not optional, an integer. Default is 1.
+created_at -- not optional. A date and time.
+completed_at -- optional. A date a time.
+In a file called todo.sql:
+
+Write the CREATE TABLE statement to make this table.
+Write INSERT statements to insert five todos into this table, with one of them completed.
+Write a SELECT statement to find all incomplete todos.
+Write a SELECT statement to find all todos with a priority above 1.
+Write an UPDATE statement to complete one todo by its id. Your ids may differ, so you will choose the id to up.
+Write a DELETE statement to delete all completed todos.
+
+
+================================================================================
+
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.6.3
+-- Dumped by pg_dump version 9.6.3
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner:
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner:
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: projects; Type: TABLE; Schema: public; Owner: reggieandgeorgiatardy
+--
+
+CREATE TABLE projects (
+    id integer NOT NULL,
+    title character varying(255) NOT NULL,
+    details character varying(3000),
+    priority integer DEFAULT 1 NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    completed_at timestamp without time zone
+);
+
+
+ALTER TABLE projects OWNER TO reggieandgeorgiatardy;
+
+--
+-- Name: projects_id_seq; Type: SEQUENCE; Schema: public; Owner: reggieandgeorgiatardy
+--
+
+CREATE SEQUENCE projects_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE projects_id_seq OWNER TO reggieandgeorgiatardy;
+
+--
+-- Name: projects_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: reggieandgeorgiatardy
+--
+
+ALTER SEQUENCE projects_id_seq OWNED BY projects.id;
+
+
+--
+-- Name: projects id; Type: DEFAULT; Schema: public; Owner: reggieandgeorgiatardy
+--
+
+ALTER TABLE ONLY projects ALTER COLUMN id SET DEFAULT nextval('projects_id_seq'::regclass);
+
+
+--
+-- Data for Name: projects; Type: TABLE DATA; Schema: public; Owner: reggieandgeorgiatardy
+--
+
+COPY projects (id, title, details, priority, created_at, completed_at) FROM stdin;
+1	painting	bathroom walls	3	2017-08-11 14:16:27.706251	\N
+2	painting	bedroom walls walls	3	2017-08-11 14:17:38.023282	\N
+3	clea garage	remove trash	1	2017-08-11 14:18:29.378922	\N
+4	garage	clean lawnmower	1	2017-08-11 14:19:25.549243	\N
+5	car	change tires	2	2017-08-11 14:20:44.434439	\N
+6	car	wash	1	2017-08-11 14:50:37.976933	\N
+7	car	vacuum	2	2017-08-11 14:51:18.050873	\N
+8	car	oil change	3	2017-08-11 14:51:33.979436	\N
+9	car	rotate tires	4	2017-08-11 14:51:58.810513	\N
+10	car	check muffler	5	2017-08-11 14:52:40.461086	\N
+\.
+
+
+--
+-- Name: projects_id_seq; Type: SEQUENCE SET; Schema: public; Owner: reggieandgeorgiatardy
+--
+
+SELECT pg_catalog.setval('projects_id_seq', 10, true);
+
+
+--
+-- Name: projects projects_pkey; Type: CONSTRAINT; Schema: public; Owner: reggieandgeorgiatardy
+--
+
+ALTER TABLE ONLY projects
+    ADD CONSTRAINT projects_pkey PRIMARY KEY (id);
+
+
+--
+-- PostgreSQL database dump complete
+--
